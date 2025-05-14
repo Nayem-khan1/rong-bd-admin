@@ -19,7 +19,7 @@ const App = () => {
   }, [token]);
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       {token === "" ? (
         <Login setToken={setToken} />
       ) : (

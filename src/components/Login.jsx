@@ -2,10 +2,15 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { backendUrl } from '../App';
 import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router';
 
-const Login = ({setToken}) => {
+const Login = () => {
+    const { setToken } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState(""); 
+
+    const navigate = useNavigate();
 
     const onSubmitHandler = async (e) => {
         try {
@@ -17,6 +22,7 @@ const Login = ({setToken}) => {
             if (response.data.success){
                 setToken(response.data.token);
                 toast.success("Login Successful");
+                navigate('/');
             } else {
                 toast.error(response.data.message);
             }

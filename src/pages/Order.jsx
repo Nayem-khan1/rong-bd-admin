@@ -4,8 +4,10 @@ import { backendUrl, currency } from "./../App";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { assets } from "../assets/assets";
+import { useAuth } from "../context/AuthContext";
 
-const Order = ({ token }) => {
+const Order = () => {
+  const { token } = useAuth();
   const [orders, setOrders] = useState([]);
 
   const fetchAllOrders = async () => {

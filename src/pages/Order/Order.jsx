@@ -7,7 +7,7 @@ import { assets } from "../../assets/assets";
 import { useAuth } from "../../context/AuthContext";
 import PageMeta from "../../components/common/PageMeta";
 import ComponentCard from "../../components/common/ComponentCard";
-import PageBreadcrumb from "../../components/common/PageBreadCrumb";
+import PageBreadcrumb from "../../components/common/PageBreadcrumb";
 
 const Order = () => {
   const { token } = useAuth();

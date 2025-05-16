@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router';
 
 const Login = () => {
-    const { setToken } = useAuth();
+    const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState(""); 
 
@@ -20,7 +20,7 @@ const Login = () => {
                 password
             });
             if (response.data.success){
-                setToken(response.data.token);
+                login(response.data.token)
                 toast.success("Login Successful");
                 navigate('/');
             } else {

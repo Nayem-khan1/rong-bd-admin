@@ -3,14 +3,15 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import AppLayout from "./layout/AppLayout";
 
-import Add from "./pages/Add";
-import List from "./pages/List";
-import Order from "./pages/Order";
+import List from "./pages/Products/List";
 import Login from "./components/Login";
 import { Toaster } from "react-hot-toast";
 import NotFound from "./pages/OtherPage/NotFound";
 import Home from "./pages/Dashboard/Home";
 import { useAuth } from "./context/AuthContext";
+import BasicTables from "./pages/Table/BasicTables";
+import Add from "./pages/Products/Add";
+import Order from "./pages/Order/Order";
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const currency = "৳";
@@ -35,6 +36,7 @@ const App = () => {
                 <Route path="/add" element={<Add/>} />
                 <Route path="/list" element={<List/>} />
                 <Route path="/orders" element={<Order/>} />
+                <Route path="/table" element={<BasicTables/>}/>
               </Route>
               <Route path="*" element={<NotFound />} />
             </>

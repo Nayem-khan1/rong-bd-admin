@@ -8,7 +8,6 @@ import { useAuth } from "../../context/AuthContext";
 import PageMeta from "../../components/common/PageMeta";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import ComponentCard from "../../components/common/ComponentCard";
-import BasicTableOne from "../../components/tables/BasicTables/BasicTables";
 
 const Order = () => {
   const { token } = useAuth();

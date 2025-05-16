@@ -9,7 +9,6 @@ import { Toaster } from "react-hot-toast";
 import NotFound from "./pages/OtherPage/NotFound";
 import Home from "./pages/Dashboard/Home";
 import { useAuth } from "./context/AuthContext";
-import BasicTables from "./pages/Table/BasicTables";
 import Add from "./pages/Products/Add";
 import Order from "./pages/Order/Order";
 
@@ -36,7 +35,6 @@ const App = () => {
                 <Route path="/add" element={<Add/>} />
                 <Route path="/list" element={<List/>} />
                 <Route path="/orders" element={<Order/>} />
-                <Route path="/table" element={<BasicTables/>}/>
               </Route>
               <Route path="*" element={<NotFound />} />
             </>

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { backendUrl, currency } from "../../App";
 import toast from "react-hot-toast";
 import PageMeta from "../../components/common/PageMeta";
-import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import ComponentCard from "../../components/common/ComponentCard";
+import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 
 const List = ({ token }) => {
   const [list, setList] = useState([]);

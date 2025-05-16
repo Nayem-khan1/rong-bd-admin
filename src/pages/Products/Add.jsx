@@ -4,8 +4,8 @@ import { backendUrl } from "../../App";
 import toast from "react-hot-toast";
 import { assets } from "./../../assets/assets";
 import PageMeta from "../../components/common/PageMeta";
-import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import ComponentCard from "../../components/common/ComponentCard";
+import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 
 const Add = ({ token }) => {
   const [image1, setImage1] = useState(false);

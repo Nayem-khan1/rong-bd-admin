@@ -247,7 +247,7 @@ const AppSidebar = () => {
             <>
               <img
                 className="dark:hidden"
-                src="/images/logo/logo.jpg"
+                src="/images/logo/logo-ecom.svg"
                 alt="Logo"
                 width={150}
                 height={40}

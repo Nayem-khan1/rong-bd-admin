@@ -5,8 +5,10 @@ import toast from "react-hot-toast";
 import PageMeta from "../../components/common/PageMeta";
 import ComponentCard from "../../components/common/ComponentCard";
 import PageBreadcrumb from "../../components/common/PageBreadcrumb";
+import { useAuth } from "../../context/AuthContext";
 
-const List = ({ token }) => {
+const List = () => {
+  const { token } = useAuth();
   const [list, setList] = useState([]);
 
   const fetchList = async () => {

@@ -6,8 +6,10 @@ import { assets } from "./../../assets/assets";
 import PageMeta from "../../components/common/PageMeta";
 import ComponentCard from "../../components/common/ComponentCard";
 import PageBreadcrumb from "../../components/common/PageBreadcrumb";
+import { useAuth } from "../../context/AuthContext";
 
-const Add = ({ token }) => {
+const Add = () => {
+  const {token} = useAuth();
   const [image1, setImage1] = useState(false);
   const [image2, setImage2] = useState(false);
   const [image3, setImage3] = useState(false);

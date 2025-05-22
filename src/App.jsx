@@ -11,6 +11,7 @@ import Home from "./pages/Dashboard/Home";
 import { useAuth } from "./context/AuthContext";
 import Add from "./pages/Products/Add";
 import Order from "./pages/Order/Order";
+import UserManage from "./pages/UserManage/UserManage";
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const currency = "৳";
@@ -19,22 +20,23 @@ const App = () => {
   const { isLoggedIn } = useAuth();
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <Router>
-        <Toaster position="top-center" reverseOrder={false} />
         <ScrollToTop />
         <Routes>
           {!isLoggedIn ? (
             <>
-              <Route path="/login" element={<Login/>} />
+              <Route path="/login" element={<Login />} />
               <Route path="*" element={<Navigate to="/login" />} />
             </>
           ) : (
             <>
               <Route element={<AppLayout />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/add" element={<Add/>} />
-                <Route path="/list" element={<List/>} />
-                <Route path="/orders" element={<Order/>} />
+                <Route path="/add" element={<Add />} />
+                <Route path="/list" element={<List />} />
+                <Route path="/orders" element={<Order />} />
+                <Route path="/users" element={<UserManage/>}/>
               </Route>
               <Route path="*" element={<NotFound />} />
             </>

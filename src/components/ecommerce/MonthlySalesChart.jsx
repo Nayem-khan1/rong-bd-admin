@@ -3,8 +3,50 @@ import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { MoreDotIcon } from "../../icons";
 import { useState } from "react";
+import { useEffect } from "react";
 
-export default function MonthlySalesChart() {
+export default function MonthlySalesChart({ monthlyRevenue }) {
+  const [series, setSeries] = useState([{ name: "Sales", data: [] }]);
+  const [categories, setCategories] = useState([]);
+
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  useEffect(() => {
+    if (monthlyRevenue && Array.isArray(monthlyRevenue)) {
+      const currentYear = new Date().getFullYear();
+      const fullYearData = Array.from({ length: 12 }, (_, i) => ({
+        label: `${monthNames[i]} ${currentYear}`,
+        revenue: 0,
+      }));
+
+      monthlyRevenue.forEach((item) => {
+        const monthIndex = item._id.month - 1;
+        if (item._id.year === currentYear) {
+          fullYearData[monthIndex].revenue = item.total;
+        }
+      });
+
+      const transformedCategories = fullYearData.map((item) => item.label);
+      const transformedData = fullYearData.map((item) => item.revenue);
+
+      setCategories(transformedCategories);
+      setSeries([{ name: "Revenue ($)", data: transformedData }]);
+    }
+  }, [monthlyRevenue]);
+
   const options = {
     colors: ["#465fff"],
     chart: {
@@ -32,20 +74,7 @@ export default function MonthlySalesChart() {
       colors: ["transparent"],
     },
     xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      categories: categories,
       axisBorder: {
         show: false,
       },
@@ -80,16 +109,10 @@ export default function MonthlySalesChart() {
         show: false,
       },
       y: {
-        formatter: (val) => `${val}`,
+        formatter: (val) => `$${val.toLocaleString()}`,
       },
     },
   };
-  const series = [
-    {
-      name: "Sales",
-      data: [168, 385, 201, 298, 187, 195, 291, 110, 215, 390, 280, 112],
-    },
-  ];
   const [isOpen, setIsOpen] = useState(false);
 
   function toggleDropdown() {
@@ -103,7 +126,7 @@ export default function MonthlySalesChart() {
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 pt-5 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-          Monthly Sales
+          Monthly Revenue ($)
         </h3>
         <div className="relative inline-block">
           <button className="dropdown-toggle" onClick={toggleDropdown}>
@@ -119,12 +142,6 @@ export default function MonthlySalesChart() {
               className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
             >
               View More
-            </DropdownItem>
-            <DropdownItem
-              onItemClick={closeDropdown}
-              className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
-            >
-              Delete
             </DropdownItem>
           </Dropdown>
         </div>

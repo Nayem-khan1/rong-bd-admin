@@ -1,9 +1,77 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 
 import PageMeta from "../../components/common/PageMeta";
-import EcommerceMetrics from './../../components/ecommerce/EcommerceMetrics';
-import MonthlySalesChart from './../../components/ecommerce/MonthlySalesChart';
+import { useAuth } from "../../context/AuthContext";
+import { backendUrl } from "../../App";
+import EcommerceMetrics from "./../../components/ecommerce/EcommerceMetrics";
+import MonthlySalesChart from "./../../components/ecommerce/MonthlySalesChart";
+import OrdersByStatusChart from "../../components/ecommerce/OrdersByStatusChart";
+import ProductCategoryChart from "../../components/ecommerce/ProductCategoryChart";
+import NewUsersLineChart from "../../components/ecommerce/NewUsersLineChart";
+import TopSellingProductsChart from "../../components/ecommerce/TopSellingProductsChart";
+import TopCustomersTable from "../../components/ecommerce/TopCustomersTable";
+import RecentOrders from "../../components/ecommerce/RecentOrders";
 
 export default function Home() {
+  const { token } = useAuth();
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [orders, revenue, users, products, top] = await Promise.all([
+          axios.get(backendUrl + "/api/analytics/order", {
+            headers: { token },
+          }),
+          axios.get(backendUrl + "/api/analytics/revenue", {
+            headers: { token },
+          }),
+          axios.get(backendUrl + "/api/analytics/users", {
+            headers: { token },
+          }),
+          axios.get(backendUrl + "/api/analytics/products", {
+            headers: { token },
+          }),
+          axios.get(backendUrl + "/api/analytics/top-performers", {
+            headers: { token },
+          }),
+        ]);
+        setData({
+          orders: orders.data.data,
+          revenue: revenue.data.data,
+          users: users.data.data,
+          products: products.data.data,
+          top: top.data.data,
+        });
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  console.log(data);
+  // const labels = data.ordersByStatus.map(item => item._id);
+  // const series = data.ordersByStatus.map(item => item.count);
+  // console.log(labels, series);
+
+  const info = {
+    totalOrders: 35,
+    ordersByStatus: [
+      { _id: "Order Placed", count: 26 },
+      { _id: "Delivered", count: 3 },
+      { _id: "Out for delivery", count: 2 },
+      { _id: "Packing", count: 3 },
+      { _id: "Shipped", count: 1 },
+    ],
+  };
+
+  if (loading) return <div className="text-center p-10">Loading...</div>;
+
   return (
     <>
       <PageMeta
@@ -12,25 +80,32 @@ export default function Home() {
       />
       <div className="grid grid-cols-12 gap-4 md:gap-6">
         <div className="col-span-12 space-y-6 xl:col-span-7">
-          <EcommerceMetrics />
+          <EcommerceMetrics
+            totalOrders={data.orders.totalOrders}
+            totalRevenue={data.revenue.totalRevenue}
+            totalUsers={data.users.totalUsers}
+            totalProducts={data.products.totalProducts}
+          />
 
-          <MonthlySalesChart />
+          {data.orders?.monthlyRevenue && (
+            <MonthlySalesChart monthlyRevenue={data.orders.monthlyRevenue} />
+          )}
+          <TopSellingProductsChart
+            topSellingProducts={data.top.topSellingProducts}
+          />
         </div>
 
         <div className="col-span-12 xl:col-span-5">
-          {/* <MonthlyTarget /> */}
+          <OrdersByStatusChart data={info} />
+          <ProductCategoryChart categoryCount={data.products.categoryCount} />
+          <TopCustomersTable topCustomers={data.top.topCustomersByRevenue} />
         </div>
-
-        <div className="col-span-12">
-          {/* <StatisticsChart /> */}
-        </div>
-
         <div className="col-span-12 xl:col-span-5">
-          {/* <DemographicCard /> */}
+          <NewUsersLineChart newUsersPerDay={data.users.newUsersPerDay} />
         </div>
 
         <div className="col-span-12 xl:col-span-7">
-          {/* <RecentOrders /> */}
+          <RecentOrders recentOrders={data.orders.recentOrders} />
         </div>
       </div>
     </>

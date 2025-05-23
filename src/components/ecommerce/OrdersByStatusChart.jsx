@@ -34,7 +34,7 @@ const OrdersByStatusChart = ({ data }) => {
         breakpoint: 480,
         options: {
           chart: {
-            width: 200,
+            width: 320,
           },
           legend: {
             position: "bottom",

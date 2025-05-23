@@ -54,21 +54,16 @@ export default function Home() {
     fetchData();
   }, []);
 
-  console.log(data);
-  // const labels = data.ordersByStatus.map(item => item._id);
-  // const series = data.ordersByStatus.map(item => item.count);
-  // console.log(labels, series);
+  let orderByStatusData;
 
-  const info = {
-    totalOrders: 35,
-    ordersByStatus: [
-      { _id: "Order Placed", count: 26 },
-      { _id: "Delivered", count: 3 },
-      { _id: "Out for delivery", count: 2 },
-      { _id: "Packing", count: 3 },
-      { _id: "Shipped", count: 1 },
-    ],
-  };
+  if (data?.orders) {
+    const ordersByStatus = data.orders.ordersByStatus;
+    const totalOrders = data.orders.totalOrders;
+    orderByStatusData = {
+      totalOrders,
+      ordersByStatus,
+    }
+  }
 
   if (loading) return <div className="text-center p-10">Loading...</div>;
 
@@ -96,7 +91,9 @@ export default function Home() {
         </div>
 
         <div className="col-span-12 xl:col-span-5">
-          <OrdersByStatusChart data={info} />
+          {
+            orderByStatusData && <OrdersByStatusChart data={orderByStatusData} />
+          }
           <ProductCategoryChart categoryCount={data.products.categoryCount} />
           <TopCustomersTable topCustomers={data.top.topCustomersByRevenue} />
         </div>

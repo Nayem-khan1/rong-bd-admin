@@ -38,6 +38,11 @@ const navItems = [
     icon: <ListIcon />,
     path: "/orders",
   },
+  {
+    name: "Users",
+    icon: <UserCircleIcon/>,
+    path: "/users"
+  }
 ];
 
 const othersItems = [];

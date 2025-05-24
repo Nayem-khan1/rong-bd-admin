@@ -5,10 +5,15 @@ import PageBreadcrumb from "../../components/common/PageBreadcrumb";
 import ComponentCard from "../../components/common/ComponentCard";
 import { backendUrl } from "../../App";
 import BasicTableOne from "../../components/tables/BasicTableOne";
+import Notification from "../../components/ui/notification/Notification";
+import ConfirmModal from "../../components/ui/alert/ConfirmModal"
 
 const UserManage = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+  const [notification, setNotification] = useState(null);
+
 
   const fetchUsers = async () => {
     try {
@@ -25,15 +30,24 @@ const UserManage = () => {
     }
   };
 
-  const deleteUser = async (id) => {
-    if (!confirm("Are you sure you want to delete this user?")) return;
+    useEffect(() => {
+    fetchUsers();
+  }, []);
+
+    const handleDelete = (id) => setConfirmDeleteId(id);
+
+const confirmDelete = async () => {
     try {
-      await axios.delete(`${backendUrl}/api/users/${id}`, {
+      await axios.delete(`${backendUrl}/api/users/${confirmDeleteId}`, {
         headers: { token: localStorage.getItem("token") },
       });
-      setUsers(users.filter((user) => user._id !== id));
+      setUsers(users.filter((user) => user._id !== confirmDeleteId));
+      setNotification({ type: "success", message: "User deleted successfully." });
     } catch (error) {
-      alert("Failed to delete user");
+      console.error(error);
+      setNotification({ type: "error", message: "Failed to delete user." });
+    } finally {
+      setConfirmDeleteId(null);
     }
   };
 
@@ -44,26 +58,21 @@ const UserManage = () => {
         { role: newRole },
         { headers: { token: localStorage.getItem("token") } }
       );
-      setUsers(
-        users.map((user) =>
-          user._id === id ? { ...user, role: newRole } : user
-        )
-      );
+      setUsers(users.map((user) => (user._id === id ? { ...user, role: newRole } : user)));
+      setNotification({ type: "success", message: "User role updated." });
     } catch (error) {
-      alert("Failed to update role");
+      console.error(error);
+      setNotification({ type: "error", message: "Failed to update role." });
     }
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   if (loading) return <div className="text-center mt-10">Loading...</div>;
 
   // Inject action handlers into each user
   const enhancedUsers = users.map((user) => ({
     ...user,
-    onDelete: deleteUser,
+    onDelete: handleDelete,
     onRoleChange: updateRole,
   }));
 
@@ -71,9 +80,22 @@ const UserManage = () => {
     <>
       <PageMeta title="User Management" description="Manage all users" />
       <PageBreadcrumb pageTitle="User Management" />
-      <ComponentCard title="User List">
-        <BasicTableOne data={enhancedUsers} />
+      <ComponentCard title="User List">{notification && (
+          <Notification
+            type={notification.type}
+            message={notification.message}
+            onClose={() => setNotification(null)}
+          />
+        )}
+        <BasicTableOne data={enhancedUsers} type = "user" />
       </ComponentCard>
+      <ConfirmModal
+        show={!!confirmDeleteId}
+        title="Confirm Delete"
+        message="Are you sure you want to delete this user?"
+        onConfirm={confirmDelete}
+        onCancel={() => setConfirmDeleteId(null)}
+      />
     </>
   );
 };

@@ -186,102 +186,136 @@ const List = () => {
           <form className="flex flex-col">
             <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
               <div>
-                <div>
-                  <p className="mb-2">Upload Image</p>
-                  <div className="flex gap-2">
-                    <label htmlFor="image1">
-                      <img
-                        className="w-20"
-                        src={
-                          !image1
-                            ? assets.upload_area
-                            : URL.createObjectURL(image1)
-                        }
-                        alt=""
-                      />
-                      <input
-                        onChange={(e) => setImage1(e.target.files[0])}
-                        type="file"
-                        id="image1"
-                        hidden
-                      />
-                    </label>
-                    <label htmlFor="image2">
-                      <img
-                        className="w-20"
-                        src={
-                          !image2
-                            ? assets.upload_area
-                            : URL.createObjectURL(image2)
-                        }
-                        alt=""
-                      />
-                      <input
-                        onChange={(e) => setImage2(e.target.files[0])}
-                        type="file"
-                        id="image2"
-                        hidden
-                      />
-                    </label>
-                    <label htmlFor="image3">
-                      <img
-                        className="w-20"
-                        src={
-                          !image3
-                            ? assets.upload_area
-                            : URL.createObjectURL(image3)
-                        }
-                        alt=""
-                      />
-                      <input
-                        onChange={(e) => setImage3(e.target.files[0])}
-                        type="file"
-                        id="image3"
-                        hidden
-                      />
-                    </label>
-                    <label htmlFor="image4">
-                      <img
-                        className="w-20"
-                        src={
-                          !image4
-                            ? assets.upload_area
-                            : URL.createObjectURL(image4)
-                        }
-                        alt=""
-                      />
-                      <input
-                        onChange={(e) => setImage4(e.target.files[0])}
-                        type="file"
-                        id="image4"
-                        hidden
-                      />
-                    </label>
-                  </div>
+                <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
+                  Upload Image
+                </h5>
+
+                <div className="grid grid-cols-2 gap-x-6 gap-y-5 lg:grid-cols-4">
+                  <label htmlFor="image1">
+                    <img
+                      className="w-20"
+                      src={
+                        !image1
+                          ? assets.upload_area
+                          : URL.createObjectURL(image1)
+                      }
+                      alt=""
+                    />
+                    <input
+                      onChange={(e) => setImage1(e.target.files[0])}
+                      type="file"
+                      id="image1"
+                      hidden
+                    />
+                  </label>
+                  <label htmlFor="image2">
+                    <img
+                      className="w-20"
+                      src={
+                        !image2
+                          ? assets.upload_area
+                          : URL.createObjectURL(image2)
+                      }
+                      alt=""
+                    />
+                    <input
+                      onChange={(e) => setImage2(e.target.files[0])}
+                      type="file"
+                      id="image2"
+                      hidden
+                    />
+                  </label>
+                  <label htmlFor="image3">
+                    <img
+                      className="w-20"
+                      src={
+                        !image3
+                          ? assets.upload_area
+                          : URL.createObjectURL(image3)
+                      }
+                      alt=""
+                    />
+                    <input
+                      onChange={(e) => setImage3(e.target.files[0])}
+                      type="file"
+                      id="image3"
+                      hidden
+                    />
+                  </label>
+                  <label htmlFor="image4">
+                    <img
+                      className="w-20"
+                      src={
+                        !image4
+                          ? assets.upload_area
+                          : URL.createObjectURL(image4)
+                      }
+                      alt=""
+                    />
+                    <input
+                      onChange={(e) => setImage4(e.target.files[0])}
+                      type="file"
+                      id="image4"
+                      hidden
+                    />
+                  </label>
                 </div>
-                <div className="w-full">
+              </div>
+              <div className="mt-7">
+                <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
+                  Product information
+                </h5>
+
+                <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+                  <div className="w-full">
+                    <div>
+                      <Label htmlFor="input">Product Name</Label>
+                      <Input
+                        onChange={(e) => setUpdatedName(e.target.value)}
+                        value={updatedName}
+                        type="text"
+                        placeholder="Type Here"
+                        id="input"
+                      />
+                    </div>
+                  </div>
                   <div>
-                    <Label htmlFor="input">Product Name</Label>
+                    <Label className="mb-2">Product Price</Label>
                     <Input
-                      onChange={(e) => setUpdatedName(e.target.value)}
-                      value={updatedName}
-                      type="text"
-                      placeholder="Type Here"
+                      onChange={(e) => setUpdatedPrice(e.target.value)}
+                      value={updatedPrice}
+                      type="number"
+                      placeholder="250"
                       id="input"
                     />
                   </div>
                 </div>
-                <div className="w-full">
-                  <Label>Product description</Label>
-                  <TextArea
-                    value={updatedDescription}
-                    onChange={(value) => setUpdatedDescription(value)}
-                    rows={6}
-                  />
+
+                <div className="grid grid-cols-1 gap-x-6 gap-y-5">
+                  <div className="w-full">
+                    <Label>Product description</Label>
+                    <TextArea
+                      value={updatedDescription}
+                      onChange={(value) => setUpdatedDescription(value)}
+                      rows={2}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="">
-                <div className="flex flex-col w-full">
+
+                <div className="grid grid-cols-1 gap-x-6 gap-y-5">
+                  <div>
+                    <MultiSelect
+                      label="Product Sizes"
+                      options={sizes}
+                      onChange={(values) => setUpdatedSizes(values)}
+                    />
+                    <p className="sr-only">
+                      Selected Values: {updatedSizes.join(", ")}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                   <div>
                     <Label className="mb-2">Product category</Label>
                     <Select
@@ -300,37 +334,21 @@ const List = () => {
                       className="dark:bg-dark-900"
                     />
                   </div>
-                  <div>
-                    <Label className="mb-2">Product Price</Label>
-                    <Input
-                      onChange={(e) => setUpdatedPrice(e.target.value)}
-                      value={updatedPrice}
-                      type="number"
-                      placeholder="250"
-                      id="input"
+                </div>
+                <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+                  <div className="flex items-center gap-3 mt-2">
+                    <Checkbox
+                      checked={isBestSeller}
+                      onChange={setIsBestseller}
                     />
+                    <span className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                      Add to Bestseller
+                    </span>
                   </div>
-                </div>
-                <div>
-                  <MultiSelect
-                    label="Multiple Select Options"
-                    options={sizes}
-                    defaultSelected={["1", "3"]}
-                    onChange={(values) => setUpdatedSizes(values)}
-                  />
-                  <p className="sr-only">
-                    Selected Values: {updatedSizes.join(", ")}
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3 mt-2">
-                  <Checkbox checked={isBestSeller} onChange={setIsBestseller} />
-                  <span className="block text-sm font-medium text-gray-700 dark:text-gray-400">
-                    Add to Bestseller
-                  </span>
                 </div>
               </div>
             </div>
+
             <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
               <Button size="sm" variant="outline" onClick={closeModal}>
                 Close

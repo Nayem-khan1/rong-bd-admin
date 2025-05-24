@@ -169,7 +169,7 @@ const List = () => {
         description="All Product Page description"
       />
       <PageBreadcrumb pageTitle="All Products" />
-      <ComponentCard title={"Product List"}>
+      <ComponentCard title={"Product List"} buttonTitle={"Add Product"} path="/add">
         <BasicTableOne data={formattedProducts} type="product" />
       </ComponentCard>
       <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
@@ -179,21 +179,21 @@ const List = () => {
               Update Product
             </h4>
             <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-              Update your product.
+              Modify the details of your product.
             </p>
           </div>
 
-          <form className="flex flex-col">
+          <form className="flex flex-col space-y-6">
             <div className="custom-scrollbar h-[450px] overflow-y-auto px-2 pb-3">
-              <div>
+              <section>
                 <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
-                  Upload Image
+                  Product Images
                 </h5>
 
-                <div className="grid grid-cols-2 gap-x-6 gap-y-5 lg:grid-cols-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   <label htmlFor="image1">
                     <img
-                      className="w-20"
+                      className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                       src={
                         !image1
                           ? assets.upload_area
@@ -210,7 +210,7 @@ const List = () => {
                   </label>
                   <label htmlFor="image2">
                     <img
-                      className="w-20"
+                      className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                       src={
                         !image2
                           ? assets.upload_area
@@ -227,7 +227,7 @@ const List = () => {
                   </label>
                   <label htmlFor="image3">
                     <img
-                      className="w-20"
+                      className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                       src={
                         !image3
                           ? assets.upload_area
@@ -244,7 +244,7 @@ const List = () => {
                   </label>
                   <label htmlFor="image4">
                     <img
-                      className="w-20"
+                      className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                       src={
                         !image4
                           ? assets.upload_area
@@ -260,24 +260,22 @@ const List = () => {
                     />
                   </label>
                 </div>
-              </div>
-              <div className="mt-7">
+              </section>
+              <section className="mt-5">
                 <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
-                  Product information
+                  Product Information
                 </h5>
 
-                <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-                  <div className="w-full">
-                    <div>
-                      <Label htmlFor="input">Product Name</Label>
-                      <Input
-                        onChange={(e) => setUpdatedName(e.target.value)}
-                        value={updatedName}
-                        type="text"
-                        placeholder="Type Here"
-                        id="input"
-                      />
-                    </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <Label htmlFor="input">Product Name</Label>
+                    <Input
+                      onChange={(e) => setUpdatedName(e.target.value)}
+                      value={updatedName}
+                      type="text"
+                      placeholder="Type Here"
+                      id="input"
+                    />
                   </div>
                   <div>
                     <Label className="mb-2">Product Price</Label>
@@ -291,18 +289,22 @@ const List = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-x-6 gap-y-5">
+                <div className="mt-4">
                   <div className="w-full">
                     <Label>Product description</Label>
                     <TextArea
                       value={updatedDescription}
                       onChange={(value) => setUpdatedDescription(value)}
-                      rows={2}
+                      rows={3}
                     />
                   </div>
                 </div>
-
-                <div className="grid grid-cols-1 gap-x-6 gap-y-5">
+              </section>
+              <section className="mt-4">
+                <h5 className="text-lg font-medium text-gray-800 dark:text-white mb-4">
+                  Additional Details
+                </h5>
+                <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <MultiSelect
                       label="Product Sizes"
@@ -310,43 +312,36 @@ const List = () => {
                       onChange={(values) => setUpdatedSizes(values)}
                     />
                     <p className="sr-only">
-                      Selected Values: {updatedSizes.join(", ")}
+                      Selected Sizes: {updatedSizes.join(", ")}
                     </p>
                   </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                   <div>
-                    <Label className="mb-2">Product category</Label>
+                    <Label>Category</Label>
                     <Select
                       options={categories}
-                      placeholder="Select Option"
+                      placeholder="Select Category"
                       onChange={handleCategoryChange}
-                      className="dark:bg-dark-900"
                     />
                   </div>
                   <div>
-                    <Label className="mb-2">Sub category</Label>
+                    <Label>Sub Category</Label>
                     <Select
                       options={subCategories}
-                      placeholder="Select Option"
+                      placeholder="Select Sub Category"
                       onChange={handleSubCategoryChange}
-                      className="dark:bg-dark-900"
                     />
                   </div>
-                </div>
-                <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
-                  <div className="flex items-center gap-3 mt-2">
+                  <div className="flex items-center gap-3 mt-6">
                     <Checkbox
                       checked={isBestSeller}
                       onChange={setIsBestseller}
                     />
-                    <span className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-400">
                       Add to Bestseller
                     </span>
                   </div>
                 </div>
-              </div>
+              </section>
             </div>
 
             <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">

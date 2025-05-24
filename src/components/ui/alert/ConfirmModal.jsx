@@ -13,7 +13,7 @@ export default function ConfirmModal({ show, title, message, onConfirm, onCancel
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-999999 flex items-center justify-center bg-black/50"
       onClick={handleOverlayClick}
     >
       <div

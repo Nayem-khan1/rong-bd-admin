@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { backendUrl, currency } from "../../App";
+import { useEffect, useState } from "react";
+import { backendUrl } from "../../App";
 import toast from "react-hot-toast";
 import PageMeta from "../../components/common/PageMeta";
 import ComponentCard from "../../components/common/ComponentCard";
@@ -16,7 +16,6 @@ import TextArea from "../../components/form/input/TextArea";
 import Select from "../../components/form/Select";
 import MultiSelect from "../../components/form/MultiSelect";
 import Checkbox from "../../components/form/input/Checkbox";
-import { TrashBinIcon } from "../../icons";
 import BasicTableOne from "../../components/tables/BasicTableOne";
 const List = () => {
   const { token } = useAuth();

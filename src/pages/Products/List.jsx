@@ -33,6 +33,7 @@ const List = () => {
   const [updatedPrice, setUpdatedPrice] = useState("");
   const [updatedSizes, setUpdatedSizes] = useState([]);
   const [isBestSeller, setIsBestseller] = useState(false);
+  const [imagePreviews, setImagePreviews] = useState([null, null, null, null]);
 
   const fetchList = async () => {
     try {
@@ -90,10 +91,10 @@ const List = () => {
     formData.append("sizes", JSON.stringify(updatedSizes));
     formData.append("bestSeller", isBestSeller.toString());
 
-    // if (image1File) formData.append("image1", image1File);
-    // if (image2File) formData.append("image2", image2File);
-    // if (image3File) formData.append("image3", image3File);
-    // if (image4File) formData.append("image4", image4File);
+    image1 && formData.append("image1", image1);
+    image2 && formData.append("image2", image2);
+    image3 && formData.append("image3", image3);
+    image4 && formData.append("image4", image4);
 
     try {
       const response = axios.post(backendUrl + "/api/product/update", {
@@ -149,7 +150,7 @@ const List = () => {
     price: product.price,
     image: product.image?.[0] || "",
     onEdit: () => {
-      // Prefill form values here before opening modal
+      // Set all form values from product
       setUpdatedName(product.name);
       setUpdatedDescription(product.description);
       setUpdatedCategory(product.category);
@@ -157,6 +158,21 @@ const List = () => {
       setUpdatedPrice(product.price);
       setUpdatedSizes(product.sizes || []);
       setIsBestseller(product.bestSeller || false);
+
+      // Image preview (URLs only; real files can't be prefilled)
+      setImage1(null);
+      setImage2(null);
+      setImage3(null);
+      setImage4(null);
+
+      // If needed: preload image URLs in a separate state for preview only
+      setImagePreviews([
+        product.image?.[0] || null,
+        product.image?.[1] || null,
+        product.image?.[2] || null,
+        product.image?.[3] || null,
+      ]);
+
       openModal();
     },
     onDelete: () => removeProduct(product._id),
@@ -169,7 +185,11 @@ const List = () => {
         description="All Product Page description"
       />
       <PageBreadcrumb pageTitle="All Products" />
-      <ComponentCard title={"Product List"} buttonTitle={"Add Product"} path="/add">
+      <ComponentCard
+        title={"Product List"}
+        buttonTitle={"Add Product"}
+        path="/add"
+      >
         <BasicTableOne data={formattedProducts} type="product" />
       </ComponentCard>
       <Modal isOpen={isOpen} onClose={closeModal} className="max-w-[700px] m-4">
@@ -195,12 +215,13 @@ const List = () => {
                     <img
                       className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                       src={
-                        !image1
-                          ? assets.upload_area
-                          : URL.createObjectURL(image1)
+                        image1
+                          ? URL.createObjectURL(image1)
+                          : imagePreviews[0] || assets.upload_area
                       }
                       alt=""
                     />
+
                     <input
                       onChange={(e) => setImage1(e.target.files[0])}
                       type="file"
@@ -212,9 +233,9 @@ const List = () => {
                     <img
                       className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                       src={
-                        !image2
-                          ? assets.upload_area
-                          : URL.createObjectURL(image2)
+                        image2
+                          ? URL.createObjectURL(image2)
+                          : imagePreviews[1] || assets.upload_area
                       }
                       alt=""
                     />
@@ -229,9 +250,9 @@ const List = () => {
                     <img
                       className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                       src={
-                        !image3
-                          ? assets.upload_area
-                          : URL.createObjectURL(image3)
+                        image3
+                          ? URL.createObjectURL(image3)
+                          : imagePreviews[2] || assets.upload_area
                       }
                       alt=""
                     />
@@ -246,9 +267,9 @@ const List = () => {
                     <img
                       className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                       src={
-                        !image4
-                          ? assets.upload_area
-                          : URL.createObjectURL(image4)
+                        image4
+                          ? URL.createObjectURL(image4)
+                          : imagePreviews[3] || assets.upload_area
                       }
                       alt=""
                     />
@@ -309,6 +330,7 @@ const List = () => {
                     <MultiSelect
                       label="Product Sizes"
                       options={sizes}
+                      defaultSelected={updatedSizes}
                       onChange={(values) => setUpdatedSizes(values)}
                     />
                     <p className="sr-only">
@@ -320,6 +342,7 @@ const List = () => {
                     <Select
                       options={categories}
                       placeholder="Select Category"
+                      defaultValue={updatedCategory}
                       onChange={handleCategoryChange}
                     />
                   </div>
@@ -328,6 +351,7 @@ const List = () => {
                     <Select
                       options={subCategories}
                       placeholder="Select Sub Category"
+                      defaultValue={updatedSubCategory}
                       onChange={handleSubCategoryChange}
                     />
                   </div>

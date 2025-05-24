@@ -34,6 +34,7 @@ const List = () => {
   const [updatedSizes, setUpdatedSizes] = useState([]);
   const [isBestSeller, setIsBestseller] = useState(false);
   const [imagePreviews, setImagePreviews] = useState([null, null, null, null]);
+  const [currentProductId, setCurrentProductId] = useState(null);
 
   const fetchList = async () => {
     try {
@@ -95,28 +96,50 @@ const List = () => {
     image2 && formData.append("image2", image2);
     image3 && formData.append("image3", image3);
     image4 && formData.append("image4", image4);
+    console.log(
+      "id:",
+      productId,
+      ", name:",
+      updatedName,
+      ", description:",
+      updatedDescription,
+      ", price:",
+      updatedPrice,
+      ", category:",
+      updatedCategory,
+      ", sub category",
+      updatedSubCategory,
+      ", sizes:",
+      updatedSizes,
+      ", best seller:",
+      isBestSeller
+    );
+
+    console.log(formData);
 
     try {
-      const response = axios.post(backendUrl + "/api/product/update", {
-        method: "POST",
+      const response = await axios.post(
+        backendUrl + "/api/product/update",
         formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-          token: token,
-        },
-      });
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: token,
+          },
+        }
+      );
 
-      const data = await response.json();
-      console.log(data);
-      console.log("Saving changes...");
+      if (response.data.success) {
+        toast.success("Product updated successfully!");
+        fetchList(); // Refresh product list
+      } else {
+        toast.error(response.data.message || "Failed to update product.");
+      }
       closeModal();
     } catch (error) {
       console.error("Update failed:", error);
-      console.log("Saving changes...");
       closeModal();
     }
-    console.log("Saving changes...");
-    closeModal();
   };
   const categories = [
     { value: "Men", label: "Men" },
@@ -151,6 +174,7 @@ const List = () => {
     image: product.image?.[0] || "",
     onEdit: () => {
       // Set all form values from product
+      setCurrentProductId(product._id);
       setUpdatedName(product.name);
       setUpdatedDescription(product.description);
       setUpdatedCategory(product.category);
@@ -372,7 +396,13 @@ const List = () => {
               <Button size="sm" variant="outline" onClick={closeModal}>
                 Close
               </Button>
-              <Button size="sm" onClick={handleProductUpdate}>
+              <Button
+                size="sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleProductUpdate(currentProductId);
+                }}
+              >
                 Update
               </Button>
             </div>

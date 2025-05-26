@@ -17,8 +17,10 @@ import Select from "../../components/form/Select";
 import MultiSelect from "../../components/form/MultiSelect";
 import Checkbox from "../../components/form/input/Checkbox";
 import BasicTableOne from "../../components/tables/BasicTableOne";
+import Loader from "../../components/common/Loader";
 const List = () => {
   const { token } = useAuth();
+  const [loading, setLoading] = useState(true);
   const { isOpen, openModal, closeModal } = useModal();
   const [list, setList] = useState([]);
   const [image1, setImage1] = useState(false);
@@ -48,6 +50,8 @@ const List = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -202,6 +206,7 @@ const List = () => {
     onDelete: () => removeProduct(product._id),
   }));
 
+  if (loading) return <Loader />;
   return (
     <>
       <PageMeta

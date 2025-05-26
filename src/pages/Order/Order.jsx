@@ -8,10 +8,12 @@ import { useAuth } from "../../context/AuthContext";
 import PageMeta from "../../components/common/PageMeta";
 import ComponentCard from "../../components/common/ComponentCard";
 import PageBreadcrumb from "../../components/common/PageBreadcrumb";
+import Loader from "../../components/common/Loader";
 
 const Order = () => {
   const { token } = useAuth();
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchAllOrders = async () => {
     if (!token) {
@@ -30,6 +32,8 @@ const Order = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,6 +59,9 @@ const Order = () => {
   useEffect(() => {
     fetchAllOrders();
   }, [token]);
+
+  if (loading) return <Loader />;
+
   return (
     <>
       <PageMeta

@@ -29,7 +29,6 @@ export default function SignInForm() {
       });
       if (response.data.success) {
         login(response.data.data.token);
-        console.log(response);
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         toast.success("Login Successful");
         navigate("/");

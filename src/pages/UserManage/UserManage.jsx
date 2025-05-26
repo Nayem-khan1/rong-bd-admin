@@ -7,6 +7,7 @@ import { backendUrl } from "../../App";
 import BasicTableOne from "../../components/tables/BasicTableOne";
 import Notification from "../../components/ui/notification/Notification";
 import ConfirmModal from "../../components/ui/alert/ConfirmModal"
+import Loader from "../../components/common/Loader";
 
 const UserManage = () => {
   const [users, setUsers] = useState([]);
@@ -67,7 +68,7 @@ const confirmDelete = async () => {
   };
 
 
-  if (loading) return <div className="text-center mt-10">Loading...</div>;
+  if (loading) return <Loader/>;
 
   // Inject action handlers into each user
   const enhancedUsers = users.map((user) => ({

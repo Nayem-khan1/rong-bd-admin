@@ -13,6 +13,7 @@ import NewUsersLineChart from "../../components/ecommerce/NewUsersLineChart";
 import TopSellingProductsChart from "../../components/ecommerce/TopSellingProductsChart";
 import TopCustomersTable from "../../components/ecommerce/TopCustomersTable";
 import RecentOrders from "../../components/ecommerce/RecentOrders";
+import Loader from "../../components/common/Loader";
 
 export default function Home() {
   const { token } = useAuth();
@@ -65,7 +66,7 @@ export default function Home() {
     }
   }
 
-  if (loading) return <div className="text-center p-10">Loading...</div>;
+  if (loading) return <Loader/>;
 
   return (
     <>

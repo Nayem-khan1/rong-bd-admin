@@ -12,6 +12,7 @@ import { useAuth } from "./context/AuthContext";
 import Add from "./pages/Products/Add";
 import Order from "./pages/Order/Order";
 import UserManage from "./pages/UserManage/UserManage";
+import SignIn from "./pages/AuthPages/SignIn";
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const currency = "৳";
@@ -26,7 +27,7 @@ const App = () => {
         <Routes>
           {!isLoggedIn ? (
             <>
-              <Route path="/login" element={<Login />} />
+              <Route path="/sign-in" element={<SignIn />} />
               <Route path="*" element={<Navigate to="/login" />} />
             </>
           ) : (

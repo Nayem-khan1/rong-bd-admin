@@ -7,9 +7,17 @@ import PageMeta from "../../components/common/PageMeta";
 import ComponentCard from "../../components/common/ComponentCard";
 import PageBreadcrumb from "../../components/common/PageBreadcrumb";
 import { useAuth } from "../../context/AuthContext";
+import Label from "../../components/form/Label";
+import Input from "../../components/form/input/Input";
+import TextArea from "../../components/form/input/TextArea";
+import MultiSelect from "../../components/form/MultiSelect";
+import Select from "../../components/form/Select";
+import Checkbox from "../../components/form/input/Checkbox";
+import Button from "../../components/ui/button/Button";
+import { BoxIcon } from "../../icons";
 
 const Add = () => {
-  const {token} = useAuth();
+  const { token } = useAuth();
   const [image1, setImage1] = useState(false);
   const [image2, setImage2] = useState(false);
   const [image3, setImage3] = useState(false);
@@ -20,7 +28,7 @@ const Add = () => {
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [price, setPrice] = useState("");
-  const [Sizes, setSizes] = useState([]);
+  const [sizes, setSizes] = useState([]);
   const [bestseller, setBestseller] = useState(false);
 
   const onSubmitHandler = async (e) => {
@@ -33,7 +41,7 @@ const Add = () => {
       formData.append("category", category);
       formData.append("subCategory", subCategory);
       formData.append("price", price);
-      formData.append("sizes", JSON.stringify(Sizes));
+      formData.append("sizes", JSON.stringify(sizes));
       formData.append("bestseller", bestseller);
 
       image1 && formData.append("image1", image1);
@@ -69,7 +77,29 @@ const Add = () => {
       toast.error("Product Addition Failed");
     }
   };
-
+  const categories = [
+    { value: "Men", label: "Men" },
+    { value: "Women", label: "Women" },
+    { value: "Kids", label: "Kids" },
+  ];
+  const subCategories = [
+    { value: "Topwear", label: "Topwear" },
+    { value: "Bottomwear", label: "Bottomwear" },
+    { value: "Winterwear", label: "Winterwear" },
+  ];
+  const productSizes = [
+    { value: "S", text: "S", selected: false },
+    { value: "M", text: "M", selected: false },
+    { value: "L", text: "L", selected: false },
+    { value: "XL", text: "XL", selected: false },
+    { value: "XXL", text: "XXL", selected: false },
+  ];
+  const handleCategoryChange = (value) => {
+    setCategory(value);
+  };
+  const handleSubCategoryChange = (value) => {
+    setSubCategory(value);
+  };
   return (
     <>
       <PageMeta title="Add Product" description="This page is product Add" />
@@ -80,12 +110,14 @@ const Add = () => {
             onSubmit={onSubmitHandler}
             className="flex flex-col w-full items-start gap-3"
           >
-            <div>
-              <p className="mb-2">Upload Image</p>
-              <div className="flex gap-2">
+            <section>
+              <p className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
+                Upload Image
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <label htmlFor="image1">
                   <img
-                    className="w-20"
+                    className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                     src={
                       !image1 ? assets.upload_area : URL.createObjectURL(image1)
                     }
@@ -100,7 +132,7 @@ const Add = () => {
                 </label>
                 <label htmlFor="image2">
                   <img
-                    className="w-20"
+                    className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                     src={
                       !image2 ? assets.upload_area : URL.createObjectURL(image2)
                     }
@@ -115,7 +147,7 @@ const Add = () => {
                 </label>
                 <label htmlFor="image3">
                   <img
-                    className="w-20"
+                    className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                     src={
                       !image3 ? assets.upload_area : URL.createObjectURL(image3)
                     }
@@ -130,7 +162,7 @@ const Add = () => {
                 </label>
                 <label htmlFor="image4">
                   <img
-                    className="w-20"
+                    className="w-24 h-24 object-cover rounded-md border border-gray-300 dark:border-gray-700"
                     src={
                       !image4 ? assets.upload_area : URL.createObjectURL(image4)
                     }
@@ -144,172 +176,94 @@ const Add = () => {
                   />
                 </label>
               </div>
-            </div>
+            </section>
 
-            <div className="w-full">
-              <p className="mb-2">Product Name</p>
-              <input
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                type="text"
-                placeholder="Type Here"
-                className="w-full max-w-[500px] px-3 py-2"
-              />
-            </div>
-            <div className="w-full">
-              <p className="mb-2">Product description</p>
-              <textarea
-                onChange={(e) => setDescription(e.target.value)}
-                value={description}
-                type="text"
-                placeholder="Write content here"
-                className="w-full max-w-[500px] px-3 py-2"
-              />
-            </div>
-            <div className="flex flex-col sm:flex-row gap-2 w-full sm:gap-8">
-              <div>
-                <p className="mb-2">Product category</p>
-                <select
-                  onChange={(e) => setCategory(e.target.value)}
-                  value={category}
-                  className="w-full px-3 py-2"
-                >
-                  <option value="Men">Men</option>
-                  <option value="Women">Women</option>
-                  <option value="Kids">Kids</option>
-                </select>
-              </div>
-              <div>
-                <p className="mb-2">Sub category</p>
-                <select
-                  onChange={(e) => setSubCategory(e.target.value)}
-                  value={subCategory}
-                  className="w-full px-3 py-2"
-                >
-                  <option value="Topwear">Topwear</option>
-                  <option value="Bottomwear">Bottomwear</option>
-                  <option value="Winterwear">Winterwear</option>
-                </select>
-              </div>
-              <div>
-                <p className="mb-2">Product Price</p>
-                <input
-                  onChange={(e) => setPrice(e.target.value)}
-                  value={price}
-                  type="number"
-                  placeholder="899"
-                  className="w-full max-w-[120px] px-3 py-2"
-                />
-              </div>
-            </div>
-            <div>
-              <p className="mb-2">Product Sizes</p>
-              <div className="flex gap-3">
-                <div
-                  onClick={() =>
-                    setSizes((prev) =>
-                      prev.includes("S")
-                        ? prev.filter((item) => item !== "S")
-                        : [...prev, "S"]
-                    )
-                  }
-                >
-                  <p
-                    className={`${
-                      Sizes.includes("S") ? "bg-pink-100" : "bg-slate-200"
-                    } px-3 py-1 cursor-pointer`}
-                  >
-                    S
-                  </p>
+            <section className="mt-5">
+              <h5 className="mb-5 text-lg font-medium text-gray-800 dark:text-white/90 lg:mb-6">
+                Product Information
+              </h5>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="">
+                  <Label htmlFor="input">Product Name</Label>
+                  <Input
+                    onChange={(e) => setName(e.target.value)}
+                    value={name}
+                    type="text"
+                    placeholder="Type Here"
+                    id="input"
+                  />
                 </div>
-                <div
-                  onClick={() =>
-                    setSizes((prev) =>
-                      prev.includes("M")
-                        ? prev.filter((item) => item !== "M")
-                        : [...prev, "M"]
-                    )
-                  }
-                >
-                  <p
-                    className={`${
-                      Sizes.includes("M") ? "bg-pink-100" : "bg-slate-200"
-                    } px-3 py-1 cursor-pointer`}
-                  >
-                    M
-                  </p>
-                </div>
-                <div
-                  onClick={() =>
-                    setSizes((prev) =>
-                      prev.includes("L")
-                        ? prev.filter((item) => item !== "L")
-                        : [...prev, "L"]
-                    )
-                  }
-                >
-                  <p
-                    className={`${
-                      Sizes.includes("L") ? "bg-pink-100" : "bg-slate-200"
-                    } px-3 py-1 cursor-pointer`}
-                  >
-                    L
-                  </p>
-                </div>
-                <div
-                  onClick={() =>
-                    setSizes((prev) =>
-                      prev.includes("XL")
-                        ? prev.filter((item) => item !== "XL")
-                        : [...prev, "XL"]
-                    )
-                  }
-                >
-                  <p
-                    className={`${
-                      Sizes.includes("XL") ? "bg-pink-100" : "bg-slate-200"
-                    } px-3 py-1 cursor-pointer`}
-                  >
-                    XL
-                  </p>
-                </div>
-                <div
-                  onClick={() =>
-                    setSizes((prev) =>
-                      prev.includes("XXL")
-                        ? prev.filter((item) => item !== "XXL")
-                        : [...prev, "XXL"]
-                    )
-                  }
-                >
-                  <p
-                    className={`${
-                      Sizes.includes("XXL") ? "bg-pink-100" : "bg-slate-200"
-                    } px-3 py-1 cursor-pointer`}
-                  >
-                    XXL
-                  </p>
+                <div>
+                  <Label className="mb-2">Product Price</Label>
+                  <Input
+                    onChange={(e) => setPrice(e.target.value)}
+                    value={price}
+                    type="number"
+                    placeholder="250"
+                    id="input"
+                  />
                 </div>
               </div>
-            </div>
-            <div className="flex gap-2 mt-2">
-              <input
-                type="checkbox"
-                id="bestseller"
-                className="mr-2"
-                checked={bestseller}
-                onChange={(e) => setBestseller(e.target.checked)}
-              />
-              <label className="cursor-pointer" htmlFor="bestseller">
-                Add to Bestseller
-              </label>
-            </div>
-            <button
+              <div className="mt-4">
+                <div className="w-full">
+                  <Label>Product description</Label>
+                  <TextArea
+                    value={description}
+                    onChange={(value) => setDescription(value)}
+                    rows={3}
+                  />
+                </div>
+              </div>
+            </section>
+
+            <section className="mt-4">
+              <h5 className="text-lg font-medium text-gray-800 dark:text-white mb-4">
+                Additional Details
+              </h5>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <MultiSelect
+                    label="Product Sizes"
+                    options={productSizes}
+                    defaultSelected={sizes}
+                    onChange={(values) => setSizes(values)}
+                  />
+                  <p className="sr-only">Selected Sizes: {sizes.join(", ")}</p>
+                </div>
+                <div>
+                  <Label>Category</Label>
+                  <Select
+                    options={categories}
+                    placeholder="Select Category"
+                    defaultValue={category}
+                    onChange={handleCategoryChange}
+                  />
+                </div>
+                <div>
+                  <Label>Sub Category</Label>
+                  <Select
+                    options={subCategories}
+                    placeholder="Select Sub Category"
+                    defaultValue={subCategories}
+                    onChange={handleSubCategoryChange}
+                  />
+                </div>
+                <div className="flex items-center gap-3 mt-6">
+                  <Checkbox checked={bestseller} onChange={setBestseller} />
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-400">
+                    Add to Bestseller
+                  </span>
+                </div>
+              </div>
+            </section>
+            <Button
+              size="sm"
+              variant="primary"
               type="submit"
-              className="w-28 mt-4 px-4 py-2 bg-black text-white"
+              startIcon={<BoxIcon className="size-5" />}
             >
-              ADD
-            </button>
+              Add Product
+            </Button>
           </form>
         </ComponentCard>
       </div>

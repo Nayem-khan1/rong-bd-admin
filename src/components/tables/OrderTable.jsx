@@ -66,12 +66,20 @@ const OrderTable = ({ data }) => {
           {/* Table Body */}
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
             {data.map((order, index) => (
-              <TableRow key={index}>
+              <TableRow
+                key={index}
+                className={
+                  index % 2 === 0
+                    ? "bg-white dark:bg-transparent"
+                    : "bg-gray-50 dark:bg-white/[0.01]"
+                }
+              >
                 <TableCell className="px-5 py-3 text-gray-500 dark:text-gray-400">
                   {order.items.map((item, index) => (
                     <div key={index}>
                       <p className="">
-                        <span>{index + 1}. </span> {item.name} × {item.quantity}
+                        <span className=" font-bold">{index + 1}. </span>{" "}
+                        <span className="">{item.name} × {item.quantity}</span>
                       </p>
                     </div>
                   ))}
@@ -91,7 +99,11 @@ const OrderTable = ({ data }) => {
                   <Badge>${order.amount}</Badge>
                 </TableCell>
                 <TableCell className="px-5 py-3 text-gray-500 dark:text-gray-400">
-                  {order.payment ? <Badge color="success">Paid</Badge> : <Badge color="error">Pending</Badge>}
+                  {order.payment ? (
+                    <Badge color="success">Paid</Badge>
+                  ) : (
+                    <Badge color="error">Pending</Badge>
+                  )}
                 </TableCell>
                 <TableCell className="px-5 py-3 text-gray-500 dark:text-gray-400">
                   <Badge color="info">{order.paymentMethod}</Badge>

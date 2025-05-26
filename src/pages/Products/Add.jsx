@@ -30,11 +30,14 @@ const Add = () => {
   const [price, setPrice] = useState("");
   const [sizes, setSizes] = useState([]);
   const [bestseller, setBestseller] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     // Handle form submission
+      const toastId = toast.loading("Adding...");
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
@@ -61,7 +64,7 @@ const Add = () => {
       );
 
       if (response.data.success) {
-        toast.success(response.data.message);
+      toast.success(response.data.message, { id: toastId });
         setImage1(false);
         setImage2(false);
         setImage3(false);
@@ -70,11 +73,13 @@ const Add = () => {
         setDescription("");
         setPrice("");
       } else {
-        toast.error(response.data.message);
+      toast.error(response.data.message, { id: toastId });
       }
     } catch (error) {
       console.error(error);
-      toast.error("Product Addition Failed");
+    toast.error("Product Addition Failed", { id: toastId });
+    }finally {
+      setLoading(false);
     }
   };
   const categories = [
@@ -260,9 +265,9 @@ const Add = () => {
               size="sm"
               variant="primary"
               type="submit"
-              startIcon={<BoxIcon className="size-5" />}
+              endIcon={<BoxIcon className="size-5" />}
             >
-              Add Product
+              {loading ? "Adding..." : "Add Product"}
             </Button>
           </form>
         </ComponentCard>

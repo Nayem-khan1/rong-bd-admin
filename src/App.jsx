@@ -20,7 +20,7 @@ const App = () => {
   const { isLoggedIn } = useAuth();
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="bottom-right" reverseOrder={false} />
       <Router>
         <ScrollToTop />
         <Routes>

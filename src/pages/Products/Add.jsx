@@ -107,8 +107,8 @@ const Add = () => {
   };
   return (
     <>
-      <PageMeta title="Add Product" description="This page is product Add" />
-      <PageBreadcrumb pageTitle="Add Product" />
+      <PageMeta title="Add New Product" description="Add new items to your store catalog with detailed product information" />
+      <PageBreadcrumb pageTitle="Add New Product" />
       <div className="space-y-6">
         <ComponentCard title="Add Product">
           <form

@@ -84,7 +84,7 @@ const UserManage = () => {
 
   return (
     <>
-      <PageMeta title="User Management" description="Manage all users" />
+      <PageMeta title="User Management" description="Manage user roles, access levels, and customer information" />
       <PageBreadcrumb pageTitle="User Management" />
       <ComponentCard title="User List">
         {notification && (

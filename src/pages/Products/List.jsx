@@ -190,10 +190,10 @@ const List = () => {
   return (
     <>
       <PageMeta
-        title="All Products page"
-        description="All Product Page description"
+        title="Product List"
+        description="Browse, edit, or delete products currently available in the store"
       />
-      <PageBreadcrumb pageTitle="All Products" />
+      <PageBreadcrumb pageTitle="Product List" />
       <ComponentCard
         title={"Product List"}
         buttonTitle={"Add Product"}

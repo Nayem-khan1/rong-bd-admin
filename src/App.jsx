@@ -14,7 +14,7 @@ import UserManage from "./pages/UserManage/UserManage";
 import SignIn from "./pages/AuthPages/SignIn";
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
-export const currency = "৳";
+export const currency = "$";
 
 const App = () => {
   const { isLoggedIn } = useAuth();

@@ -67,7 +67,7 @@ const Order = () => {
 
   return (
     <>
-      <PageMeta title="All Orders" description="Manage customer orders" />
+      <PageMeta title="All Orders" description="Manage customer orders, view status, and update delivery information" />
       <PageBreadcrumb pageTitle="All Orders" />
 
       <ComponentCard title="All Orders">

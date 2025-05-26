@@ -249,7 +249,7 @@ const Add = () => {
                   <Select
                     options={subCategories}
                     placeholder="Select Sub Category"
-                    defaultValue={subCategories}
+                    defaultValue={subCategory}
                     onChange={handleSubCategoryChange}
                   />
                 </div>

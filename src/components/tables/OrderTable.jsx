@@ -91,10 +91,10 @@ const OrderTable = ({ data }) => {
                   <Badge>${order.amount}</Badge>
                 </TableCell>
                 <TableCell className="px-5 py-3 text-gray-500 dark:text-gray-400">
-                  {order.payment ? "Paid" : "Pending"}
+                  {order.payment ? <Badge color="success">Paid</Badge> : <Badge color="error">Pending</Badge>}
                 </TableCell>
                 <TableCell className="px-5 py-3 text-gray-500 dark:text-gray-400">
-                  {order.paymentMethod}
+                  <Badge color="info">{order.paymentMethod}</Badge>
                 </TableCell>
                 <TableCell className="px-5 py-3 text-gray-500 dark:text-gray-400">
                   {new Date(order.date).toLocaleDateString("en-GB")}

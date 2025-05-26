@@ -146,7 +146,10 @@ export default function BasicTableOne({ data, type = "user" }) {
                           onChange={(e) =>
                             item.onRoleChange(item._id, e.target.value)
                           }
-                          className="px-2 py-1 text-sm border rounded-md bg-white dark:bg-gray-800"
+                          className="px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md 
+             bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 
+             focus:outline-none focus:ring-2 focus:ring-blue-500 
+             transition duration-150 ease-in-out"
                         >
                           <option value="user">User</option>
                           <option value="admin">Admin</option>

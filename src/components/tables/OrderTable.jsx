@@ -79,7 +79,9 @@ const OrderTable = ({ data }) => {
                     <div key={index}>
                       <p className="">
                         <span className=" font-bold">{index + 1}. </span>{" "}
-                        <span className="">{item.name} × {item.quantity}</span>
+                        <span className="">
+                          {item.name} × {item.quantity}
+                        </span>
                       </p>
                     </div>
                   ))}
@@ -115,14 +117,18 @@ const OrderTable = ({ data }) => {
                   <select
                     onChange={(e) => order.onStatusChange(e, order._id)}
                     value={order.status}
-                    className="bg-white border border-gray-300 px-2 py-1 text-xs rounded"
+                    className="px-2 py-1 text-xs rounded border 
+             bg-white text-gray-900 border-gray-300 
+             dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 
+             focus:outline-none focus:ring-2 focus:ring-blue-500 
+             transition duration-150 ease-in-out"
                   >
                     <option value="Order Placed">Order Placed</option>
                     <option value="Packing">Packing</option>
                     <option value="Shipped">Shipped</option>
                     <option value="Out for delivery">Out for delivery</option>
                     <option value="Delivered">Delivered</option>
-                  </select>{" "}
+                  </select>
                 </TableCell>
               </TableRow>
             ))}

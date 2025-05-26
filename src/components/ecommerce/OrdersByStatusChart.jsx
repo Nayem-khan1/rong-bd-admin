@@ -59,8 +59,8 @@ const OrdersByStatusChart = ({ data }) => {
 };
 
 const ChartCard = ({ title, children }) => (
-  <div className="bg-white shadow rounded-2xl p-6">
-    <h3 className="text-xl font-semibold mb-4 text-gray-800">{title}</h3>
+  <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-white/[0.03]">
+    <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white/90">{title}</h3>
     <div className="h-80 flex justify-center items-center">{children}</div>
   </div>
 );

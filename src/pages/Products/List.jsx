@@ -100,26 +100,6 @@ const List = () => {
     image2 && formData.append("image2", image2);
     image3 && formData.append("image3", image3);
     image4 && formData.append("image4", image4);
-    console.log(
-      "id:",
-      productId,
-      ", name:",
-      updatedName,
-      ", description:",
-      updatedDescription,
-      ", price:",
-      updatedPrice,
-      ", category:",
-      updatedCategory,
-      ", sub category",
-      updatedSubCategory,
-      ", sizes:",
-      updatedSizes,
-      ", best seller:",
-      isBestSeller
-    );
-
-    console.log(formData);
 
     try {
       const response = await axios.post(

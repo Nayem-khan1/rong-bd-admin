@@ -6,7 +6,7 @@ import ComponentCard from "../../components/common/ComponentCard";
 import { backendUrl } from "../../App";
 import BasicTableOne from "../../components/tables/BasicTableOne";
 import Notification from "../../components/ui/notification/Notification";
-import ConfirmModal from "../../components/ui/alert/ConfirmModal"
+import ConfirmModal from "../../components/ui/alert/ConfirmModal";
 import Loader from "../../components/common/Loader";
 
 const UserManage = () => {
@@ -14,7 +14,6 @@ const UserManage = () => {
   const [loading, setLoading] = useState(true);
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [notification, setNotification] = useState(null);
-
 
   const fetchUsers = async () => {
     try {
@@ -31,19 +30,22 @@ const UserManage = () => {
     }
   };
 
-    useEffect(() => {
+  useEffect(() => {
     fetchUsers();
   }, []);
 
-    const handleDelete = (id) => setConfirmDeleteId(id);
+  const handleDelete = (id) => setConfirmDeleteId(id);
 
-const confirmDelete = async () => {
+  const confirmDelete = async () => {
     try {
       await axios.delete(`${backendUrl}/api/users/${confirmDeleteId}`, {
         headers: { token: localStorage.getItem("token") },
       });
       setUsers(users.filter((user) => user._id !== confirmDeleteId));
-      setNotification({ type: "success", message: "User deleted successfully." });
+      setNotification({
+        type: "success",
+        message: "User deleted successfully.",
+      });
     } catch (error) {
       console.error(error);
       setNotification({ type: "error", message: "Failed to delete user." });
@@ -59,7 +61,11 @@ const confirmDelete = async () => {
         { role: newRole },
         { headers: { token: localStorage.getItem("token") } }
       );
-      setUsers(users.map((user) => (user._id === id ? { ...user, role: newRole } : user)));
+      setUsers(
+        users.map((user) =>
+          user._id === id ? { ...user, role: newRole } : user
+        )
+      );
       setNotification({ type: "success", message: "User role updated." });
     } catch (error) {
       console.error(error);
@@ -67,7 +73,7 @@ const confirmDelete = async () => {
     }
   };
 
-  if (loading) return <Loader/>;
+  if (loading) return <Loader />;
 
   // Inject action handlers into each user
   const enhancedUsers = users.map((user) => ({
@@ -80,14 +86,15 @@ const confirmDelete = async () => {
     <>
       <PageMeta title="User Management" description="Manage all users" />
       <PageBreadcrumb pageTitle="User Management" />
-      <ComponentCard title="User List">{notification && (
+      <ComponentCard title="User List">
+        {notification && (
           <Notification
             type={notification.type}
             message={notification.message}
             onClose={() => setNotification(null)}
           />
         )}
-        <BasicTableOne data={enhancedUsers} type = "user" />
+        <BasicTableOne data={enhancedUsers} type="user" />
       </ComponentCard>
       <ConfirmModal
         show={!!confirmDeleteId}

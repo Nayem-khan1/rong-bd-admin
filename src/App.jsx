@@ -4,7 +4,6 @@ import { ScrollToTop } from "./components/common/ScrollToTop";
 import AppLayout from "./layout/AppLayout";
 
 import List from "./pages/Products/List";
-import Login from "./components/Login";
 import { Toaster } from "react-hot-toast";
 import NotFound from "./pages/OtherPage/NotFound";
 import Home from "./pages/Dashboard/Home";
@@ -28,7 +27,7 @@ const App = () => {
           {!isLoggedIn ? (
             <>
               <Route path="/sign-in" element={<SignIn />} />
-              <Route path="*" element={<Navigate to="/login" />} />
+              <Route path="*" element={<Navigate to="/sign-in" />} />
             </>
           ) : (
             <>

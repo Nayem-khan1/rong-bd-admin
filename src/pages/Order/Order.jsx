@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { backendUrl, currency } from "../../App";
+import { backendUrl } from "../../App";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext";
 import PageMeta from "../../components/common/PageMeta";
@@ -59,13 +59,19 @@ const Order = () => {
 
   if (loading) return <Loader />;
 
+  // Inject function
+    const orderData = orders.map((item) => ({
+    ...item,
+    onStatusChange: statusHandler,
+  }));
+
   return (
     <>
       <PageMeta title="All Orders" description="Manage customer orders" />
       <PageBreadcrumb pageTitle="All Orders" />
 
       <ComponentCard title="All Orders">
-        <OrderTable data={orders}/>
+        <OrderTable data={orderData}/>
       </ComponentCard>
     </>
   );

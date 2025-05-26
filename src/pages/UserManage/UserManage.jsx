@@ -67,7 +67,6 @@ const confirmDelete = async () => {
     }
   };
 
-
   if (loading) return <Loader/>;
 
   // Inject action handlers into each user

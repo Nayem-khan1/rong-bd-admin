@@ -34,7 +34,7 @@ const OrderTable = ({ data }) => {
                 isHeader
                 className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
               >
-                Pay Amount
+                Amount
               </TableCell>
               <TableCell
                 isHeader
@@ -46,7 +46,7 @@ const OrderTable = ({ data }) => {
                 isHeader
                 className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
               >
-                Payment Method
+                Method
               </TableCell>
               <TableCell
                 isHeader
@@ -56,7 +56,7 @@ const OrderTable = ({ data }) => {
               </TableCell>
               <TableCell
                 isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                className="px-5 py-3 font-medium text-gray-500 text-center text-theme-xs dark:text-gray-400"
               >
                 Status
               </TableCell>
@@ -69,7 +69,7 @@ const OrderTable = ({ data }) => {
               <TableRow key={index}>
                 <TableCell className="px-5 py-3 text-gray-500 dark:text-gray-400">
                   {order.items.map((item, index) => (
-                    <div key={item._id}>
+                    <div key={index}>
                       <p className="">
                         <span>{index + 1}. </span> {item.name} × {item.quantity}
                       </p>
@@ -88,7 +88,7 @@ const OrderTable = ({ data }) => {
                   <p className="text-xs">{order.address.phone}</p>
                 </TableCell>
                 <TableCell className="px-5 py-3 text-gray-500 dark:text-gray-400">
-                  ${order.amount}
+                  <Badge>${order.amount}</Badge>
                 </TableCell>
                 <TableCell className="px-5 py-3 text-gray-500 dark:text-gray-400">
                   {order.payment ? "Paid" : "Pending"}
@@ -101,7 +101,7 @@ const OrderTable = ({ data }) => {
                 </TableCell>
                 <TableCell className="px-5 py-3 text-gray-500 dark:text-gray-400">
                   <select
-                    onChange={(e) => (e, order._id)}
+                    onChange={(e) => order.onStatusChange(e, order._id)}
                     value={order.status}
                     className="bg-white border border-gray-300 px-2 py-1 text-xs rounded"
                   >

@@ -47,10 +47,11 @@ export default function Home() {
           products: products.data.data,
           top: top.data.data,
         });
-        setLoading(false);
       } catch (err) {
         console.error(err);
-      }
+      }finally {
+      setLoading(false);
+    }
     };
     fetchData();
   }, []);
@@ -77,17 +78,17 @@ export default function Home() {
       <div className="grid grid-cols-12 gap-4 md:gap-6">
         <div className="col-span-12 space-y-6 xl:col-span-7">
           <EcommerceMetrics
-            totalOrders={data.orders.totalOrders}
-            totalRevenue={data.revenue.totalRevenue}
-            totalUsers={data.users.totalUsers}
-            totalProducts={data.products.totalProducts}
+            totalOrders={data?.orders?.totalOrders}
+            totalRevenue={data?.revenue?.totalRevenue}
+            totalUsers={data?.users?.totalUsers}
+            totalProducts={data?.products?.totalProducts}
           />
 
           {data.orders?.monthlyRevenue && (
-            <MonthlySalesChart monthlyRevenue={data.orders.monthlyRevenue} />
+            <MonthlySalesChart monthlyRevenue={data?.orders?.monthlyRevenue} />
           )}
           <TopSellingProductsChart
-            topSellingProducts={data.top.topSellingProducts}
+            topSellingProducts={data?.top?.topSellingProducts}
           />
         </div>
 
@@ -95,15 +96,15 @@ export default function Home() {
           {
             orderByStatusData && <OrdersByStatusChart data={orderByStatusData} />
           }
-          <ProductCategoryChart categoryCount={data.products.categoryCount} />
-          <TopCustomersTable topCustomers={data.top.topCustomersByRevenue} />
+          <ProductCategoryChart categoryCount={data?.products?.categoryCount} />
+          <TopCustomersTable topCustomers={data?.top?.topCustomersByRevenue} />
         </div>
         <div className="col-span-12 xl:col-span-5">
-          <NewUsersLineChart newUsersPerDay={data.users.newUsersPerDay} />
+          <NewUsersLineChart newUsersPerDay={data?.users?.newUsersPerDay} />
         </div>
 
         <div className="col-span-12 xl:col-span-7">
-          <RecentOrders recentOrders={data.orders.recentOrders} />
+          <RecentOrders recentOrders={data?.orders?.recentOrders} />
         </div>
       </div>
     </>
